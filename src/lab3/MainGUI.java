@@ -257,67 +257,11 @@ public class MainGUI extends javax.swing.JFrame implements ActionListener {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnterRecordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnterRecordActionPerformed
-        foundIndex = NOT_FOUND;
-
-        partNo = this.txtNewProdNo.getText();
-        partDesc = this.txtNewProdDesc.getText();
-        try {
-            partPrice = Double.parseDouble(this.txtNewProdPrice.getText());
-        } catch(Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Sorry, the price entry must be a whole or floating point number only.\n",
-                    "Number Format Error", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        if (emptyRow > 10) {
-            JOptionPane.showMessageDialog(this, 
-                    "Sorry, you have reach the maximum of 10 items.\n"
-                    + "No more items can be saved.", "Maximum Reached", JOptionPane.WARNING_MESSAGE);
-
-        } else if (partNo.length() == 0 || partDesc.length() == 0 
-                || this.txtNewProdPrice.getText().length() == 0)
-        {
-            JOptionPane.showMessageDialog(this, 
-                    "Sorry, you must complete all fields. Please try again.",
-                    "Incomplete Part Entry", JOptionPane.WARNING_MESSAGE);
-            this.txtNewProdNo.requestFocus();
-
-        } else {
-            partNums[emptyRow] = partNo;
-            partDescs[emptyRow] = partDesc;
-            partPrices[emptyRow] = partPrice;
-            this.emptyRow += 1;
-        }
-
-        clearEntryFields();
-        this.txtNewProdNo.requestFocus();
+       enterRecord();
 }//GEN-LAST:event_btnEnterRecordActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        String searchNum = txtSearchPartNo.getText();
-        if (searchNum != null && searchNum.length() > 0) {
-            for (int i = 0; i < this.partNums.length; i++) {
-                if (searchNum.equalsIgnoreCase(partNums[i])) {
-                    foundIndex = i;
-                    break;
-                }
-            }
-           if (foundIndex == NOT_FOUND) {
-                JOptionPane.showMessageDialog(this,
-                    "Part Number not found. Please try again.",
-                    "Not Found", JOptionPane.WARNING_MESSAGE);
-           } else {
-                txtCurProdNo.setText(partNums[foundIndex]);
-                txtCurDesc.setText(partDescs[foundIndex]);
-                txtCurPrice.setText("" + partPrices[foundIndex]);
-           }
-        } else {
-                JOptionPane.showMessageDialog(this,
-                    "Please enter a Part No. to search",
-                    "Entry Missing", JOptionPane.WARNING_MESSAGE);
-        }
-
+        search();
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnDisplayListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisplayListActionPerformed
@@ -325,19 +269,8 @@ public class MainGUI extends javax.swing.JFrame implements ActionListener {
     }//GEN-LAST:event_btnDisplayListActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        if (foundIndex == NOT_FOUND) {
-                JOptionPane.showMessageDialog(this,
-                    "Part Number not found. Please try again.",
-                    "Search Failure", JOptionPane.WARNING_MESSAGE);
-        } else {
-            partNums[foundIndex] = txtCurProdNo.getText();
-            partDescs[foundIndex] = txtCurDesc.getText();
-            partPrices[foundIndex] = Double.parseDouble(txtCurPrice.getText());
-            displayList();
-            JOptionPane.showMessageDialog(this,
-                "Part updated successfully!",
-                "Success Confirmation", JOptionPane.INFORMATION_MESSAGE);
-        }
+        update();
+        
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnSortListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortListActionPerformed
@@ -391,8 +324,84 @@ public class MainGUI extends javax.swing.JFrame implements ActionListener {
         txtNewProdDesc.setText("");
         txtNewProdPrice.setText("");
     }
+    private void update(){
+          if (foundIndex == NOT_FOUND) {
+                JOptionPane.showMessageDialog(this,
+                    "Part Number not found. Please try again.",
+                    "Search Failure", JOptionPane.WARNING_MESSAGE);
+        } else {
+            partNums[foundIndex] = txtCurProdNo.getText();
+            partDescs[foundIndex] = txtCurDesc.getText();
+            partPrices[foundIndex] = Double.parseDouble(txtCurPrice.getText());
+            displayList();
+            JOptionPane.showMessageDialog(this,
+                "Part updated successfully!",
+                "Success Confirmation", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }                                         
+    private void search(){
+        String searchNum = txtSearchPartNo.getText();
+        if (searchNum != null && searchNum.length() > 0) {
+            for (int i = 0; i < this.partNums.length; i++) {
+                if (searchNum.equalsIgnoreCase(partNums[i])) {
+                    foundIndex = i;
+                    break;
+                }
+            }
+           if (foundIndex == NOT_FOUND) {
+                JOptionPane.showMessageDialog(this,
+                    "Part Number not found. Please try again.",
+                    "Not Found", JOptionPane.WARNING_MESSAGE);
+           } else {
+                txtCurProdNo.setText(partNums[foundIndex]);
+                txtCurDesc.setText(partDescs[foundIndex]);
+                txtCurPrice.setText("" + partPrices[foundIndex]);
+           }
+        } else {
+                JOptionPane.showMessageDialog(this,
+                    "Please enter a Part No. to search",
+                    "Entry Missing", JOptionPane.WARNING_MESSAGE);
+        }
+    }                                         
+private void enterRecord(){
+     foundIndex = NOT_FOUND;
 
+        partNo = this.txtNewProdNo.getText();
+        partDesc = this.txtNewProdDesc.getText();
+        try {
+            partPrice = Double.parseDouble(this.txtNewProdPrice.getText());
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Sorry, the price entry must be a whole or floating point number only.\n",
+                    "Number Format Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
+        if (emptyRow > 10) {
+            JOptionPane.showMessageDialog(this, 
+                    "Sorry, you have reach the maximum of 10 items.\n"
+                    + "No more items can be saved.", "Maximum Reached", JOptionPane.WARNING_MESSAGE);
+
+        } else if (partNo.length() == 0 || partDesc.length() == 0 
+                || this.txtNewProdPrice.getText().length() == 0)
+        {
+            JOptionPane.showMessageDialog(this, 
+                    "Sorry, you must complete all fields. Please try again.",
+                    "Incomplete Part Entry", JOptionPane.WARNING_MESSAGE);
+            this.txtNewProdNo.requestFocus();
+
+        } else {
+            partNums[emptyRow] = partNo;
+            partDescs[emptyRow] = partDesc;
+            partPrices[emptyRow] = partPrice;
+            this.emptyRow += 1;
+        }
+
+        clearEntryFields();
+        this.txtNewProdNo.requestFocus();
+}                              
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDisplayList;
     private javax.swing.JButton btnEnterRecord;
