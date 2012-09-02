@@ -15,9 +15,9 @@ public class GameBoard {
     public final int trapSpaceInterval = 4;
     private int numOfPlayers;
     private int playerTurn = 1;
+    private boolean winner = false;
     public GameBoard(){
     }
-    //THIS FIRST
      private void setNumOfPlayers(){
         //needs validation
         System.out.print("Enter number of players(2-4): ");
@@ -27,9 +27,13 @@ public class GameBoard {
     public int getNumOfPlayers(){
         return numOfPlayers;
     }
-    //THIS SECOND
     private void createPlayers(){
-        //needs validation and more
+       /* needs validation and more.....
+        * this would require reworking. Thinking I could 
+        * make seperate classes for the different # of player 
+        * games and call that class in main depending on their 
+        * selection, but may violate the DRY principle
+        */
         if (numOfPlayers <= 2){
             GameCharacter player1 = new GameCharacter();
             GameCharacter player2 = new GameCharacter();
@@ -44,39 +48,50 @@ public class GameBoard {
             GameCharacter player4 = new GameCharacter();
         }   
     }
-     //CALLS FIRST AND SECOND and third
+     
+    public void playerMove(){
+        //validation needed and much, much more
+        System.out.print("Player" + playerTurn + " Press [Enter] to roll the dice");
+        player(playerTurn).move();
+        player(playerTurn).check();
+        playerTurn++;
+    }
+    private void checkTraps(){
+        // violates single responsibility?
+        //not proper code
+        if (player(playerTurn).getCurrentSquare % 4 == 0){
+            System.out.println("You landed on a trap, go back 3 spaces!");
+            player(playerTurn).setCurrentSquare = player(playerTurn).getCurrentSquare - 3;
+        } else if (player(playerTurn).getCurrentSquare > 25) {
+            System.out.println("Need to end on 25");
+            player(playerTurn).setCurrentSquare = player(playerTurn).getCurrentSquare - 
+                    player(playerTurn).getRoll;
+        }
+    }
+    private void checkWin(){
+        //violates single responsibility???
+        if (player(playerTurn).getCurrentSquare == 25){
+            System.out.println("You Win!!");
+            winner = true;
+        }
+    }
+    public boolean getCheckWin(){
+        return winner;
+    }
+    //calls checkTraps and checkWin
+    
+    public void check(){
+        this.checkTraps();
+        this.checkWin();
+    }
+
+//CALLS set players and create players
     public void getAndCreatePlayers(){
         this.setNumOfPlayers();
         this.createPlayers();
-        this.playersMove();
     }
-    public void playersMove(){
-        //validation needed and much, much, more
-       while(player1.getCurrentSquare != 25 || player2.getCurrentSquare != 25 ||
-             player3.getCurrentSquare != 25 || player4.getCurrentSquare !=25){
-        
-        System.out.print("Player" + playerTurn + " Press [Enter] to roll the dice");
-        switch(playerTurn){
-         case 1:
-             player1.move();
-             playerTurn++;
-             break;
-        case 2:
-             player2.move();
-             playerTurn++;
-            break;
-            
-        case 3:
-            player3.move();
-            playerTurn++;
-            break;
-        case 4:
-            player4.move();
-            playerTurn = 1;
-            break;
-        }
-        System.out.println("YOU WIN!!!");
+    public int getPlayer(){
+        return playerTurn;
     }
     
-    }   
 }

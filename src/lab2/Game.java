@@ -3,19 +3,23 @@
  * and open the template in the editor.
  */
 package lab2;
-import java.util.Scanner;
 /**
- *
- * @author rbath1
+ * Robert Bath
+ * 
  */
 public class Game {
-    
+    GameBoard gameBoard = new GameBoard();
     public Game(){
     } 
     
    public void startGame(){
-       GameBoard gameBoard = new GameBoard();
        gameBoard.getAndCreatePlayers();
-       gameBoard.playersMove();
+   }
+   public void gameOn(){
+       while(gameBoard.getCheckWin() == false){
+           gameBoard.playerMove();
+       }
+       System.out.println("Congratulations player" + gameBoard.getPlayer() +
+               " you win!");
    }
 }

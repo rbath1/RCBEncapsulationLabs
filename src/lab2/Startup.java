@@ -1,12 +1,14 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Robert Bath
+ * Advanced Java (M/W 5pm)
+ * 9/1
  */
 package lab2;
 
-/**
- *
- * @author rbath1
+/** 
+ *  I realize this is very logically, architecturally, and syntax flawed, but this is
+ * what I've got. Need to brush up quickly.
+ * 
  */
 public class Startup {
     

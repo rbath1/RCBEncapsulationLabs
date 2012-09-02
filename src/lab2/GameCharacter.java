@@ -7,7 +7,7 @@ import java.util.Random;
 
 /**
  *
- * @author Bob
+ * Robert Bath
  */
 public class GameCharacter {
     Random random = new Random();
@@ -16,11 +16,9 @@ public class GameCharacter {
     boolean winner = false;
     public GameCharacter(){
     }
-    //This method performs second
+   
     public void move(){
         this.RollDice();
-        this.checkTraps();
-        this.checkWin();
     }
     private void RollDice(){
         yourRoll = random.nextInt(6) + 1;
@@ -34,22 +32,5 @@ public class GameCharacter {
     public int getRoll(){
         return yourRoll;
     }
-    private void checkTraps(){
-        if (currentSquare % 4 == 0){
-            System.out.println("You landed on a trap, go back 3 spaces!");
-            currentSquare -= 3;
-        } else if (currentSquare > 25) {
-            System.out.println("Need to end on 25");
-            currentSquare -= yourRoll;
-            
-        }
-    }
-    private void checkWin(){
-        if (currentSquare == 25){
-            System.out.println("You Win!!");
-            winner = true;
-        }
-    }
-    
 }
 
