@@ -51,6 +51,7 @@ public class GameBoard {
      
     public void playerMove(){
         //validation needed and much, much more
+        
         System.out.print("Player" + playerTurn + " Press [Enter] to roll the dice");
         player(playerTurn).move();
         player(playerTurn).check();
